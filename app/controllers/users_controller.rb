@@ -11,10 +11,7 @@ class UsersController < ApplicationController
   def create
     user = User.new(user_params)
     user.save!
-    render_notice(
-      t(
-        "successfully_created", entity: "User"
-          ))
+    render_notice(t("successfully_created", entity: "User"))
   end
 
   private
