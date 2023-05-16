@@ -6,6 +6,7 @@ class User < ApplicationRecord
   MAX_EMAIL_LENGTH = 255
 
   has_many :assigned_tasks, foreign_key: :assigned_user_id, class_name: "Task"
+  has_many :created_tasks, foreign_key: :task_owner_id, class_name: "Task"
 
   has_secure_password
   has_secure_token :authentication_token
@@ -17,10 +18,18 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, on: :create
 
   before_save :email_to_lowercase
+  before_destroy :reassign_tasks_whose_owner_is_not_current_user
 
   private
 
     def email_to_lowercase
       email.downcase!
+    end
+
+    def reassign_tasks_whose_owner_is_not_current_user
+      tasks_whose_owner_is_not_current_user = assigned_tasks.select { |task| task.task_owner_id != id }
+      tasks_whose_owner_is_not_current_user.each do |task|
+        task.update(assigned_user_id: task.task_owner_id)
+      end
     end
 end
