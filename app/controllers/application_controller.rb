@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include Pundit::Authorization
+
   before_action :authenticate_user_using_x_auth_token
 
   protect_from_forgery # More info on protect_from_forgery and other Rails security stuff https://guides.rubyonrails.org/security.html
 
   rescue_from StandardError, with: :handle_api_exception
+
+  rescue_from Pundit::NotAuthorizedError, with: :handle_authorization_error
 
   def handle_api_exception(exception)
     case exception
@@ -45,6 +49,10 @@ class ApplicationController < ActionController::Base
     log_exception(exception) unless Rails.env.test?
     error = Rails.env.production? ? t("generic_error") : exception
     render_error(error, status)
+  end
+
+  def handle_authorization_error
+    render_error(t("authorization.denied"), :forbidden)
   end
 
   def log_exception(exception)
