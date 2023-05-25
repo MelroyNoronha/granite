@@ -9,7 +9,7 @@ class CommentTest < ActiveSupport::TestCase
 
   def test_comment_should_be_invalid_without_content
     @comment.content = ""
-    asset @comment.invalid?
+    assert @comment.invalid?
   end
 
   def test_comment_content_should_not_exceed_maximum_length
