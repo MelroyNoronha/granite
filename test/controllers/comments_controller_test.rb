@@ -33,6 +33,6 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :not_found
     response_json = response.parsed_body
-    assert_equal t("task.not_found"), response_json["error"]
+    assert_equal t("not_found", entity: "Task"), response_json["error"]
   end
 end

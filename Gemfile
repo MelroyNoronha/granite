@@ -93,3 +93,7 @@ gem "simplecov", require: false, group: :test
 gem "minitest-bisect"
 
 gem "sidekiq", "<7"
+
+gem "sidekiq-cron"
+
+gem "letter_opener", group: :development
