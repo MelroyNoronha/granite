@@ -202,6 +202,7 @@ GEM
       execjs
       railties (>= 3.2)
       tilt
+    redis (4.8.1)
     regexp_parser (2.8.0)
     reline (0.3.3)
       io-console (~> 0.5)
@@ -227,6 +228,10 @@ GEM
       rubocop (>= 1.33.0, < 2.0)
     ruby-progressbar (1.13.0)
     semantic_range (3.0.0)
+    sidekiq (6.5.9)
+      connection_pool (>= 2.2.5, < 3)
+      rack (~> 2.0)
+      redis (>= 4.5.0, < 5)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -282,6 +287,7 @@ DEPENDENCIES
   responders
   rubocop
   rubocop-rails
+  sidekiq (< 7)
   simplecov
   sprockets-rails
   sqlite3 (~> 1.4)
