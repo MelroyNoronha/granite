@@ -101,3 +101,7 @@ gem "sidekiq-cron"
 gem "letter_opener", group: :development
 
 gem "uglifier"
+
+gem "wicked_pdf"
+
+gem "wkhtmltopdf-binary"
