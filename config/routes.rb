@@ -1,12 +1,22 @@
 # frozen_string_literal: true
 
+require "sidekiq/web"
+require "sidekiq/cron/web"
+
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
   # root "articles#index"
   constraints(lambda { |req| req.format === :json }) do
-    resources :tasks, except: %i[new edit], param: :slug
+    resources :tasks, except: %i[new edit], param: :slug do
+      collection do
+        resource :report, only: %i[create], module: :tasks do
+          get :download, on: :collection
+        end
+      end
+    end
+
     resources :users, only: %i[index create]
     resource :session, only: %i[create destroy]
     resources :comments, only: %i[create]
@@ -17,4 +27,12 @@ Rails.application.routes.draw do
 
   root "home#index"
   get "*path", to: "home#index", via: :all
+
+  Rails.application.routes.draw do
+    def draw(routes_name)
+      instance_eval(File.read(Rails.root.join("config/routes/#{routes_name}.rb")))
+    end
+
+    draw :sidekiq
+  end
 end
