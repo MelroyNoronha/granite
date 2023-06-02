@@ -18,6 +18,7 @@ class User < ApplicationRecord
 
   has_secure_password
   has_secure_token :authentication_token
+  has_one_attached :report
 
   validates :name, presence: true, length: { maximum: MAX_NAME_LENGTH }
   validates :email, presence: true, uniqueness: { case_sensitive: false }, length: { maximum: MAX_EMAIL_LENGTH },

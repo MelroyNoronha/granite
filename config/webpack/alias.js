@@ -6,6 +6,7 @@ module.exports = {
       common: "src/common",
       components: "src/components",
       constants: "src/constants",
+      channels: "src/channels",
     },
   },
 };

@@ -106,3 +106,9 @@ gem "uglifier"
 gem "wicked_pdf"
 # wicked_pdf uses the following binary
 gem "wkhtmltopdf-binary"
+
+gem "google-cloud-storage"
+
+gem "dotenv-rails"
+
+gem "psych", "< 4"
